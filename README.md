@@ -31,7 +31,7 @@ systemctl restart prometheus.service
 ```
 
 Run blockchain_stats.py file
-!!! Don't forgot to update LCD_ENDPOINT with your API endpoints. 
+!!! Don't forget to update LCD_ENDPOINT with your API endpoints. 
 
 ```
 python3 blockchain_stats.py (juno,akash,etc)

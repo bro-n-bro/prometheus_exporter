@@ -40,3 +40,5 @@ python3 blockchain_stats.py (juno,akash,etc)
 All metrics will be imported to prometheus and you can use them in Grafana now.
 
 You can easily add your metrics to api_calls.py file and than add to blockchain_stats.py (juno,akash,etc)
+
+Also you can export my dashboard configurations (.json file in blockchain name folder) and apply them for your needs.

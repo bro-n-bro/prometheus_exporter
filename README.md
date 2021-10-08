@@ -1,5 +1,5 @@
 # Grafana Crypto Charts
-![image](https://user-images.githubusercontent.com/89855562/134243318-0cf33d0f-d98f-46ad-83b0-241b5dc7f52a.png)
+![image](https://user-images.githubusercontent.com/89855562/136545701-33d3d2b0-9721-4188-8e63-3eba4276577a.png))
 
 To create the same dashboard you need:
 1. Install Grafana [Grafana and prometheus](https://github.com/CyberObiOne/node-monitoring-setup)
@@ -16,12 +16,12 @@ pip3 install requests
 Edit /etc/prometheus/prometheus.yml and add following lines:
 
 ```
- - job_name: 'akash'
+ - job_name: 'your_name'
     scrape_interval: 5s
     static_configs:
       - targets: ['localhost:8001']
 ```
-8001 port is the same as in akash_stats.py file
+8001 port is the same as in blockchain_stats.py file (juno,akash,etc)
 
 
 Restart prometheus 
@@ -33,9 +33,9 @@ systemctl restart prometheus.service
 Run akash_stats.py file
 
 ```
-python3 akash_stats.py
+python3 blockchain_stats.py (juno,akash,etc)
 ```
 
 All metrics will be imported to prometheus and you can use them in Grafana now.
 
-You can easily add your metrics to api_calls.py file and than add to akash_stats.py
+You can easily add your metrics to api_calls.py file and than add to blockchain_stats.py (juno,akash,etc)

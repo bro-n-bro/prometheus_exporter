@@ -1,5 +1,5 @@
 # Grafana Crypto Charts
-![image](https://user-images.githubusercontent.com/89855562/136545701-33d3d2b0-9721-4188-8e63-3eba4276577a.png))
+![image](https://user-images.githubusercontent.com/89855562/136545701-33d3d2b0-9721-4188-8e63-3eba4276577a.png)
 
 To create the same dashboard you need:
 1. Install Grafana [Grafana and prometheus](https://github.com/CyberObiOne/node-monitoring-setup)

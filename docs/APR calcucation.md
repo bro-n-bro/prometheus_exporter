@@ -1,4 +1,6 @@
 
+
+
 APR (Annual Percentage Rate) is one of the most crucial factors to consider for optimal efficiency. Staking reward comprehensively includes income from inflation and transaction fee distribution. We will  try to explain the mechanism of APR: the inflation income of staking profit.
 
 ## What is APR?
@@ -57,7 +59,14 @@ This number will be decreased soon to 502 500.
 
 APR can be calculated easy in this way:
 
-    Tokens per epoch / bonded amount
+    epoch_provisions * staking_share * 365 / bonded_tokens_amount
+
+epoch_provisions: https://lcd.osmosis-1.bronbro.io/osmosis/mint/v1beta1/epoch_provisions
+
+staking_share:  0.25 const
+
+bonded_tokens_amount: https://lcd.osmosis-1.bronbro.io/cosmos/staking/v1beta1/pool
+   
 
 ---
 
@@ -65,7 +74,7 @@ APR can be calculated easy in this way:
 
 Evmos has also [medium article](https://medium.com/evmos/the-evmos-token-model-edc07014978b), how to calculate APR:
 
-    APR = (1 - commission)((365 * EpochProvision * StakingRewards factor) / Bonded tokens)
+    APR = (365 * EpochProvision * StakingRewards factor) / Bonded tokens
 
 More information can be found here : 
 
@@ -74,6 +83,18 @@ Epoch provision: https://lcd.evmos-9001-2.bronbro.io/evmos/inflation/v1/epoch_mi
 Staking rewards factor: https://lcd.evmos-9001-2.bronbro.io/evmos/inflation/v1/params 
 
 Bonded tokens:  https://lcd.evmos-9001-2.bronbro.io/cosmos/staking/v1beta1/pool
+
+---
+
+#### Crescent blockchain:
+
+    liquidstaking.total_reward_ucre_amount_per_year / liquidstaking.total_liquid_tokens
+
+You can get this data from: https://apigw.crescent.network/params
+
+This is an official crescent API.
+
+More information can be find [here](https://docs.crescent.network/introduction/liquid-staking/overview-of-staking-rewards)
 
 ---
 

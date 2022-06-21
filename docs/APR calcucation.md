@@ -88,7 +88,9 @@ Bonded tokens:  https://lcd.evmos-9001-2.bronbro.io/cosmos/staking/v1beta1/pool
 
 #### Crescent blockchain:
 
-    liquidstaking.total_reward_ucre_amount_per_year / liquidstaking.total_liquid_tokens
+    liquidstaking.total_reward_ucre_amount_per_year / bonded tokens
+
+Where bonded tokens https://lcd.crescent-1.bronbro.io/cosmos/staking/v1beta1/pool
 
 You can get this data from: https://apigw.crescent.network/params
 

@@ -1,45 +1,92 @@
 
+
+
 APR (Annual Percentage Rate) is one of the most crucial factors to consider for optimal efficiency. Staking reward comprehensively includes income from inflation and transaction fee distribution. We will  try to explain the mechanism of APR: the inflation income of staking profit.
 
 ## What is APR?
 In staking crypto-currency, users are always keen to the most secure, efficient, highest-income-guaranteed investment route. APR is the most intuitive, important key element in staking because it presents how much interest a user would receive for the bonded asset in one year.
 
-Simply put, your staking APR is calculated as below:
+Your staking APR is calculated as below:
 
-    [Inflation * (1-Community Tax)] / Bonded Tokens Ratio
+    [inflation * (1- community_tax)] / bonded_tokens_ratio
+    
 
-Sometimes, instead of inflation per block we have Epochs ,daily distribution mechanism, it is  using in Osmo and Evmos currently.
 
-In this case, all inflation/user rewards will be distributed in exact time once per day.
+ It is possible to simplify APR equation in general if:
+```
+inflation_rate = annual_provisions / total_supply
+```
 
-Let's go to some formulas, according to networks:
+where `annual_provisions` is usually available by the  `/cosmos/mint/v1beta1/annual_provisions`  endpoint and `total_supply` - `/cosmos/bank/v1beta1/supply` endpoint
+
+```
+bonded_tokens_ratio = bonded_tokens_amount / total_supply
+```
+
+where `bonded_tokens_amount` can be find here: `/cosmos/staking/v1beta1/pool`
+
+The general APR equation can be:
+
+```
+APR = annual_provisions * (1 - community_tax) / bonded_tokens_amount
+```
+
+where `community_tax` is the chain parameter `/cosmos/distribution/v1beta1/params` 
+
+
+This way we can unify epoch and non-epoch networks:
+
+
+For epoch networks the  `annual_provisions`  is
+
+```
+annual_provisions = epoch_provisions * 365.3
+```
+The general APR for Epoch chains is:
+
+```
+APR = annual_provisions * (1 - community_tax) / bonded_tokens_amount
+```
+
+
 
 ---
-#### Juno/Cosmos based  blockchains:
+#### Non-epoch Cosmos based  blockchains:
 
 
+```
+APR = annual_provisions * (1 - community_tax) / bonded_tokens_amount
+```
 
-    [Inflation * (1-Community Tax)] / Bonded Tokens Ratio
-    
-Inflation: https://lcd.juno-1.bronbro.io/cosmos/mint/v1beta1/inflation
+According to this formula we will get ideal APR. We assume, that blocks will be produced       every 5 secs, but in real life, it cat be created longer, so this formula need to be adjusted with blockchain time producing.
 
-Community Tax: https://lcd.juno-1.bronbro.io/cosmos/distribution/v1beta1/params
+To calculate real APR, formula should be adjusted with `correction_annual_coefficient`:
 
-Bonded Tokens Ratio = Bonded tokens / Current Supply
+This is an relation between `real_blocks_per_year` and `block_per_year` in params
 
-Bonded tokens: https://lcd.juno-1.bronbro.io/cosmos/staking/v1beta1/pool
+```
+correction_annual_coefficient = real_blocks_per_year / block_per_year
+```
 
-Current Supply: https://lcd.juno-1.bronbro.io/cosmos/bank/v1beta1/supply/ujuno
+where
 
-According to this formula we will get ideal APR. We assume, that blocks will be produced       every 5 secs, but in real life, it gets ~6 secs, so this formula need to be adjusted with blockchain time producing.
+```
+real_blocks_per_year = 31561920 / real_block_time
+```
 
-To calculate real APR, formula should be adjusted:
+and
 
-    [Inflation * (1-Community Tax)] / Bonded Tokens Ratio * 5 /average block time  
+```
+real_block_time = time_for_n_blocks / n
+```
 
-Average block time : Average time per 1000 blocks
+so, the final equation for non-epoch networks APR is
 
-You can get actual data, from [link](https://supply-api.junonetwork.io/), provided by Juno devs.
+```
+APR = (annual_provisions * (1 - community_tax) / bonded_tokens_amount) * correction_annual_coefficient
+
+```
+
 
 You can use this formula for most Cosmos base chains.
 
@@ -51,13 +98,29 @@ Now let's see how Epoch chains works.
 
 You can find more information about this  in [medium article](https://medium.com/osmosis/osmo-token-distribution-ae27ea2bb4db)
 
-According to it, each epoch, 750 000 tokens will be distributed between delegators and liquidity pool providers.
-
-This number will be decreased soon to 502 500.
-
 APR can be calculated easy in this way:
 
-    Tokens per epoch / bonded amount
+    APR = annual_provisions * (1 - community_tax) / bonded_tokens_amount
+
+where
+
+``epoch_provisions: https://lcd.osmosis-1.bronbro.io/osmosis/mint/v1beta1/epoch_provisions
+``
+
+``
+annual_provisions = epoch_provisions * 365.3
+``
+
+``
+staking_rewards_factor:  0.25 const
+``
+
+`` bonded_tokens_amount: https://lcd.osmosis-1.bronbro.io/cosmos/staking/v1beta1/pool
+``
+
+``
+  community_tax: https://lcd.osmosis-1.bronbro.io/cosmos/distribution/v1beta1/params 
+``
 
 ---
 
@@ -65,15 +128,40 @@ APR can be calculated easy in this way:
 
 Evmos has also [medium article](https://medium.com/evmos/the-evmos-token-model-edc07014978b), how to calculate APR:
 
-    APR = (1 - commission)((365 * EpochProvision * StakingRewards factor) / Bonded tokens)
+    APR = annual_provisions * (1 - community_tax) / bonded_tokens_amount
 
 More information can be found here : 
 
-Epoch provision: https://lcd.evmos-9001-2.bronbro.io/evmos/inflation/v1/epoch_mint_provision 
+``Epoch provision: https://lcd.evmos-9001-2.bronbro.io/evmos/inflation/v1/epoch_mint_provision
+``
 
-Staking rewards factor: https://lcd.evmos-9001-2.bronbro.io/evmos/inflation/v1/params 
+``Staking rewards factor: https://lcd.evmos-9001-2.bronbro.io/evmos/inflation/v1/params 
+``
 
-Bonded tokens:  https://lcd.evmos-9001-2.bronbro.io/cosmos/staking/v1beta1/pool
+``Bonded tokens:  https://lcd.evmos-9001-2.bronbro.io/cosmos/staking/v1beta1/pool
+``
+
+``
+community_tax: https://lcd.evmos-9001-2.bronbro.io/cosmos/distribution/v1beta1/params
+``
+
+---
+
+#### Crescent blockchain:
+
+    liquidstaking.total_reward_ucre_amount_per_year / bonded tokens
+
+where
+
+``bonded tokens: https://lcd.crescent-1.bronbro.io/cosmos/staking/v1beta1/pool
+``
+
+``liquidstaking.total_reward_ucre_amount_per_year: https://apigw.crescent.network/params
+``
+
+This is an official crescent API.
+
+More information can be find [here](https://docs.crescent.network/introduction/liquid-staking/overview-of-staking-rewards)
 
 ---
 

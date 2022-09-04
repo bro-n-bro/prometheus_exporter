@@ -100,7 +100,7 @@ You can find more information about this  in [medium article](https://medium.com
 
 APR can be calculated easy in this way:
 
-    APR = annual_provisions * (1 - community_tax) / bonded_tokens_amount
+    APR = annual_provisions * staking_rewards_factor / bonded_tokens_amount
 
 where
 
@@ -128,7 +128,7 @@ staking_rewards_factor:  0.25 const
 
 Evmos has also [medium article](https://medium.com/evmos/the-evmos-token-model-edc07014978b), how to calculate APR:
 
-    APR = annual_provisions * (1 - community_tax) / bonded_tokens_amount
+    APR = annual_provisions * staking_rewards_factor / bonded_tokens_amount
 
 More information can be found here : 
 

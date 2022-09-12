@@ -165,6 +165,27 @@ More information can be find [here](https://docs.crescent.network/introduction/l
 
 ---
 
+#### Stride blockchain:
+
+You can calculate APR for Stride network:
+
+    APR = annual_provisions * staking / bonded_tokens_amount
+
+More information can be found here : 
+
+``genesis_epoch_provisions: https://lcd.stride-1.bronbro.io/mint/v1beta1/params
+``
+
+``annual_provisions = genesis_epoch_provisions * reduction_period_in_epochs
+``
+
+``staking: https://lcd.stride-1.bronbro.io/mint/v1beta1/params
+``
+
+``Bonded tokens:  https://lcd.stride-1.bronbro.io/cosmos/staking/v1beta1/pool
+``
+
+---
 Reference:
 
 LCD endpoints:
